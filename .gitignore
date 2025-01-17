@@ -1,0 +1,10 @@
+# Node.js specific
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Environment variables
+.env
+package-lock.json
