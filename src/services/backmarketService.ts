@@ -4,7 +4,7 @@ import { BACKMARKET_API_URL, BACKMARKET_CREDS } from "../config/config";
 export class BackMarketService {
   public async showProductListing(): Promise<any> {
     try {
-      const response = await axios.get(`${BACKMARKET_API_URL}/listings`, {
+      const response = await axios.get(`${BACKMARKET_API_URL}/ws/listings`, {
         headers: {
           Authorization: `Basic ${BACKMARKET_CREDS}`, // Use generated token
           Accept: "application/json",
@@ -18,7 +18,7 @@ export class BackMarketService {
               result: response.data.results,
             },
           };
-      }else{
+      } else {
         return {
             success: false,
             message: "Failed to fetch product listing",
@@ -36,7 +36,7 @@ export class BackMarketService {
 // Function to check BackMarket API connection using product listing endpoint
 public async checkBackMarketAPI(){
     try {
-      const response = await axios.get(`${BACKMARKET_API_URL}/listings`, {
+      const response = await axios.get(`${BACKMARKET_API_URL}/ws/listings`, {
         headers: {
           'Authorization': `Basic ${BACKMARKET_CREDS}`,  // Use generated token
           'Accept': 'application/json',

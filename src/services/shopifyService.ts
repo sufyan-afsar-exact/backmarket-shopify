@@ -1,5 +1,3 @@
-import axios from "axios";
-import { BACKMARKET_API_URL, BACKMARKET_CREDS } from "../config/config";
 import { shopify } from "..";
 
 export class BackMarketService {
