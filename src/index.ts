@@ -9,6 +9,7 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3000; // Default port if undefined
 
+
 // Validate critical environment variables
 if (!SHOPIFY_SHOP_NAME || !SHOPIFY_API_TOKEN) {
   console.error("❌ Missing Shopify credentials. Please check environment variables.");

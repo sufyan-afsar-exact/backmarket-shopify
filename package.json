@@ -4,10 +4,17 @@
   "description": "shopify app",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts"
+  "start": "nodemon src/index.ts",
+  "build": "rimraf dist && tsc",
+  "ts.check": "tsc --project tsconfig.json",
+  "add-build": "git add dist",
+  "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "pre-commit": [
+      "ts.check",
+      "build",
+      "add-build"
+  ],
   "author": "sufyan afsar",
   "license": "MIT",
   "dependencies": {
@@ -18,7 +25,6 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@vercel/node": "^5.0.2",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"

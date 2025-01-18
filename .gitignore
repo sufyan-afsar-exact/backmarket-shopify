@@ -8,3 +8,4 @@ build/
 # Environment variables
 .env
 package-lock.json
+.vercel
