@@ -1,23 +1,24 @@
 {
-  "name": "freshnode",
+  "name": "shopify-api",
   "version": "1.0.0",
-  "description": "shopify app",
   "main": "index.js",
   "scripts": {
-  "start": "nodemon src/index.ts",
-  "build": "rimraf dist && tsc",
-  "ts.check": "tsc --project tsconfig.json",
-  "add-build": "git add dist",
-  "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/index.ts",
+    "build": "rimraf dist && tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "pre-commit": [
-      "ts.check",
-      "build",
-      "add-build"
+    "ts.check",
+    "build",
+    "add-build"
   ],
-  "author": "sufyan afsar",
-  "license": "MIT",
-  "dependencies": {
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+ "dependencies": {
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -25,8 +26,11 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
+    "@types/node": "^22.10.7",
     "nodemon": "^3.1.9",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.3"
   }
 }
