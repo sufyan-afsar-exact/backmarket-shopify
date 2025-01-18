@@ -4,9 +4,8 @@
   "description": "shopify app",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts"
+    "build": "tsc&&node dist/index.js",
+    "start": "nodemon src/index.ts"
   },
   "author": "sufyan afsar",
   "license": "MIT",
