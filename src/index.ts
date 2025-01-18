@@ -2,7 +2,7 @@ import Shopify from 'shopify-api-node';
 import app from './app';
 
 import dotenv from 'dotenv';
-import { BACKMARKET_CREDS, SHOPIFY_API_TOKEN, SHOPIFY_SHOP_NAME } from './config/config';
+import { BACKMARKET_API_URL, BACKMARKET_CREDS, SHOPIFY_API_TOKEN, SHOPIFY_SHOP_NAME } from './config/config';
 import axios from 'axios';
 dotenv.config();
 const PORT = process.env.PORT
@@ -24,7 +24,7 @@ shopify.shop.get()
 // Function to check BackMarket API connection using product listing endpoint
 const checkBackMarketAPI = async () => {
   try {
-    const response = await axios.get('https://preprod.backmarket.fr/ws/listings', {
+    const response = await axios.get(`${BACKMARKET_API_URL}/listings`, {
       headers: {
         'Authorization': `Basic ${BACKMARKET_CREDS}`,  // Use generated token
         'Accept': 'application/json',
@@ -32,6 +32,7 @@ const checkBackMarketAPI = async () => {
       }
     });
     console.log(`Connected to BackMarket API : ${response.status}`);
+    console.log(response.data);
     return response.data;
 
   } catch (error) {
