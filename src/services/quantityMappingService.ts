@@ -10,7 +10,7 @@ interface BackMarketProduct {
 
 export class QuantityMappingService {
   // 🛠️ Handle Shopify inventory sync
-  public async handleShopifyInventoryUpdate(): Promise<any> {
+  public async handleShopifyInventoryUpdate(args:any|null): Promise<any> {
     const products = await shopify.product.list();
 
     if (products.length === 0) {
