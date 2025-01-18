@@ -23,6 +23,13 @@ class OrderController {
             return response.ok(yield orderService.registerOrderCreateWebhook(Object.assign({}, payload)));
         });
     }
+    static viewShopifyOrders(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const orderService = new orderMappeingService_1.OrderService();
+            const response = new response_wrapper_1.ResponseWrapper(res);
+            return response.ok(yield orderService.getOrders());
+        });
+    }
 }
 exports.OrderController = OrderController;
 //# sourceMappingURL=orderController.js.map

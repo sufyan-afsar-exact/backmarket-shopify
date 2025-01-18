@@ -9,10 +9,8 @@ interface BackMarketProduct {
 }
 
 export class QuantityMappingService {
-  // 🛠️ Handle Shopify inventory sync
-  public async handleShopifyInventoryUpdate(args:any): Promise<any> {
-    
 
+  public async handleShopifySingleProductInventoryUpdate(args:any|null): Promise<any> {
     const variant = args.variants && args.variants[0];
 
     if (!variant) {
@@ -31,7 +29,38 @@ export class QuantityMappingService {
       message: "✅ Inventory update process completed.",
       details: result,
     };
-   
+
+  }
+  // 🛠️ Handle Shopify inventory sync
+  public async handleShopifyInventoryUpdate(): Promise<any> {
+    const products = await shopify.product.list();
+
+    if (products.length === 0) {
+      console.warn("No products found in Shopify.");
+      return { success: false, message: "No products found in Shopify." };
+    }
+
+    const results = await Promise.all(
+      products.map(async (product: any) => {
+        const variant = product.variants[0];
+        const shopifySku = variant.sku;
+        const shopifyQuantity = variant.inventory_quantity;
+
+        if (!shopifySku) {
+          console.warn(`⚠️ Missing SKU for product: ${product.title}`);
+          return { success: false, message: `Missing SKU for product: ${product.title}` };
+        }
+
+        const result = await this.mapShopifySkuToBackMarketSkus(shopifySku, shopifyQuantity);
+        return result;
+      })
+    );
+
+    return {
+      success: true,
+      message: "Inventory update process completed.",
+      details: results,
+    };
   }
 
   // 🔄 Map Shopify SKU to BackMarket SKUs and update

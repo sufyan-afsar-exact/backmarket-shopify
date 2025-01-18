@@ -1,12 +1,13 @@
 // Load environment variables
 import dotenv from 'dotenv';
 import express from 'express';
-import Shopify from 'shopify-api-node'; 
+import Shopify from 'shopify-api-node';
 import routes from './routes';
 import { SHOPIFY_API_TOKEN, SHOPIFY_SHOP_NAME } from './config/config';
 dotenv.config();
 const app = express();
 app.use(express.json());
+
 
 const PORT = process.env.PORT || 3000;
 

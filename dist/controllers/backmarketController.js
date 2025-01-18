@@ -25,7 +25,7 @@ class BackmarketController {
         return __awaiter(this, void 0, void 0, function* () {
             const quantityMappingService = new quantityMappingService_1.QuantityMappingService();
             const response = new response_wrapper_1.ResponseWrapper(res);
-            return response.ok(yield quantityMappingService.handleShopifyInventoryUpdate(null));
+            return response.ok(yield quantityMappingService.handleShopifyInventoryUpdate());
         });
     }
     static handleInventoryUpdateWebhook(req, res) {
@@ -35,7 +35,7 @@ class BackmarketController {
             const payload = req.body;
             // Log the incoming order data
             console.log("📦 Inventory Updated:", JSON.stringify(payload, null, 2));
-            return response.ok(yield quantityMappingService.handleShopifyInventoryUpdate(Object.assign({}, payload)));
+            return response.ok(yield quantityMappingService.handleShopifySingleProductInventoryUpdate(Object.assign({}, payload)));
         });
     }
 }

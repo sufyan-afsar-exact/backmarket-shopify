@@ -5,10 +5,11 @@ import { shopifyController } from "../controllers/shopifyController";
 import { OrderController } from "../controllers/orderController";
 const router = Router();
 
-router.get(
+router.get( 
     "/backmarket/product-listing",
     wrapper(BackmarketController.showProductListing)
   );
+
 
   router.get(
     "/shopify/product-listing",
@@ -18,6 +19,11 @@ router.get(
   router.get(
     "/sync/inventory",
     wrapper(BackmarketController.handleInventoryUpdate)
+  );
+
+  router.get(
+    "/webhooks/orders/view",
+    wrapper(OrderController.viewShopifyOrders)
   );
 
 

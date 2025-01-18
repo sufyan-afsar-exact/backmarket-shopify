@@ -9,6 +9,7 @@ const router = (0, express_1.Router)();
 router.get("/backmarket/product-listing", (0, exception_wrapper_1.wrapper)(backmarketController_1.BackmarketController.showProductListing));
 router.get("/shopify/product-listing", (0, exception_wrapper_1.wrapper)(shopifyController_1.shopifyController.showProductListing));
 router.get("/sync/inventory", (0, exception_wrapper_1.wrapper)(backmarketController_1.BackmarketController.handleInventoryUpdate));
+router.get("/webhooks/orders/view", (0, exception_wrapper_1.wrapper)(orderController_1.OrderController.viewShopifyOrders));
 router.post("/webhooks/sync/inventory", (0, exception_wrapper_1.wrapper)(backmarketController_1.BackmarketController.handleInventoryUpdateWebhook));
 router.post("/webhooks/orders/create", (0, exception_wrapper_1.wrapper)(orderController_1.OrderController.handleOrderCreateWebhook));
 exports.default = router;
