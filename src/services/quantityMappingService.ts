@@ -10,35 +10,28 @@ interface BackMarketProduct {
 
 export class QuantityMappingService {
   // 🛠️ Handle Shopify inventory sync
-  public async handleShopifyInventoryUpdate(args:any|null): Promise<any> {
-    const products = await shopify.product.list();
+  public async handleShopifyInventoryUpdate(args:any): Promise<any> {
+    
 
-    if (products.length === 0) {
-      console.warn("No products found in Shopify.");
-      return { success: false, message: "No products found in Shopify." };
+    const variant = args.variants && args.variants[0];
+
+    if (!variant) {
+      throw new Error("❌ No variant data found in the payload.");
     }
 
-    const results = await Promise.all(
-      products.map(async (product: any) => {
-        const variant = product.variants[0];
-        const shopifySku = variant.sku;
-        const shopifyQuantity = variant.inventory_quantity;
+    const shopifySku = variant.sku;  // Extract SKU
+    const shopifyQuantity = variant.inventory_quantity;  // Extract inventory quantity
 
-        if (!shopifySku) {
-          console.warn(`⚠️ Missing SKU for product: ${product.title}`);
-          return { success: false, message: `Missing SKU for product: ${product.title}` };
-        }
+    console.log(`🔎 Extracted SKU: ${shopifySku}, Quantity: ${shopifyQuantity}`);
 
-        const result = await this.mapShopifySkuToBackMarketSkus(shopifySku, shopifyQuantity);
-        return result;
-      })
-    );
+    const result = await this.mapShopifySkuToBackMarketSkus(shopifySku, shopifyQuantity);
 
     return {
       success: true,
-      message: "Inventory update process completed.",
-      details: results,
+      message: "✅ Inventory update process completed.",
+      details: result,
     };
+   
   }
 
   // 🔄 Map Shopify SKU to BackMarket SKUs and update

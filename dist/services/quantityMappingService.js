@@ -15,31 +15,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.QuantityMappingService = void 0;
 const axios_1 = __importDefault(require("axios"));
 const config_1 = require("../config/config");
-const __1 = require("..");
 class QuantityMappingService {
     // 🛠️ Handle Shopify inventory sync
     handleShopifyInventoryUpdate(args) {
         return __awaiter(this, void 0, void 0, function* () {
-            const products = yield __1.shopify.product.list();
-            if (products.length === 0) {
-                console.warn("No products found in Shopify.");
-                return { success: false, message: "No products found in Shopify." };
+            const variant = args.variants && args.variants[0];
+            if (!variant) {
+                throw new Error("❌ No variant data found in the payload.");
             }
-            const results = yield Promise.all(products.map((product) => __awaiter(this, void 0, void 0, function* () {
-                const variant = product.variants[0];
-                const shopifySku = variant.sku;
-                const shopifyQuantity = variant.inventory_quantity;
-                if (!shopifySku) {
-                    console.warn(`⚠️ Missing SKU for product: ${product.title}`);
-                    return { success: false, message: `Missing SKU for product: ${product.title}` };
-                }
-                const result = yield this.mapShopifySkuToBackMarketSkus(shopifySku, shopifyQuantity);
-                return result;
-            })));
+            const shopifySku = variant.sku; // Extract SKU
+            const shopifyQuantity = variant.inventory_quantity; // Extract inventory quantity
+            console.log(`🔎 Extracted SKU: ${shopifySku}, Quantity: ${shopifyQuantity}`);
+            const result = yield this.mapShopifySkuToBackMarketSkus(shopifySku, shopifyQuantity);
             return {
                 success: true,
-                message: "Inventory update process completed.",
-                details: results,
+                message: "✅ Inventory update process completed.",
+                details: result,
             };
         });
     }
