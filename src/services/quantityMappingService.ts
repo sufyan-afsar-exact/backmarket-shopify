@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKMARKET_API_URL, BACKMARKET_CREDS } from "../config/config";
+import { BACKMARKET_API_URL, BACKMARKET_CREDS, BACKMARKET_HEADERS } from "../config/config";
 import { shopify } from "..";
 
 // 🏷️ Define BackMarket product interface
@@ -48,11 +48,7 @@ export class QuantityMappingService {
   private async mapShopifySkuToBackMarketSkus(shopifySku: string, quantity: number): Promise<string> {
     try {
       const response = await axios.get(`${BACKMARKET_API_URL}/bm/catalog/listings`, {
-        headers: {
-          Authorization: `Basic ${BACKMARKET_CREDS}`,
-          Accept: "application/json",
-          "Accept-Language": "fr-fr",
-        },
+        headers: BACKMARKET_HEADERS, // Centralized headers used here
         params: { sku: shopifySku },
       });
 
@@ -90,11 +86,8 @@ export class QuantityMappingService {
       const payload = { quantity };
 
       const response = await axios.post(updateUrl, payload, {
-        headers: {
-          Authorization: `Basic ${BACKMARKET_CREDS}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+        headers: BACKMARKET_HEADERS, // Centralized headers used here
+
       });
 
       if (![200, 201].includes(response.status)) {
