@@ -4,27 +4,12 @@ import express from 'express';
 import Shopify from 'shopify-api-node';
 import routes from './routes';
 import { SHOPIFY_API_TOKEN, SHOPIFY_SHOP_NAME } from './config/config';
-import { QuantityMappingService } from './services/quantityMappingService';
-import { BackMarketService } from './services/backmarketService';
 dotenv.config();
-// Constants
-const PORT = process.env.PORT || 3000;
-
-// Initialize Express
 const app = express();
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello, Shopify app!');
-});
 
-app.get('/ping', (req, res) => {
-  res.send('pong 🏓')
-});
-
-
-// API Routes
-app.use('/api', routes);
+const PORT = process.env.PORT || 3000;
 
 // Validate Shopify Credentials
 function validateEnv() {
@@ -40,17 +25,12 @@ export const shopify = new Shopify({
   accessToken: SHOPIFY_API_TOKEN
 });
 
-
 // Start Server
 async function startServer(shopify: Shopify) {
   try {
     const shop = await shopify.shop.get();
     console.log(`✅ Connected to Shopify store: ${shop.name}`);
 
-    await new BackMarketService().checkBackMarketAPI();
-    await new QuantityMappingService().handleShopifyInventoryUpdate();
-
-    app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
   } catch (error: any) {
     console.error(`❌ Startup error: ${error.message}`);
     process.exit(1);
@@ -72,6 +52,19 @@ function main() {
   setupGracefulShutdown();
 }
 
-// main();
+main();
+
+
+
+app.get('/', (req, res) => {
+  res.send('Hello, Shopify app!');
+});
+app.get('/ping', (req, res) => {
+  res.send('pong 🏓')
+});
+
+
+// API Routes
+app.use('/api', routes);
 
 export default app;

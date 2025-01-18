@@ -13,4 +13,9 @@ router.get(
     "/shopify/product-listing",
     wrapper(shopifyController.showProductListing)
   );
+
+  router.get(
+    "/sync/inventory",
+    wrapper(BackmarketController.handleInventoryUpdate)
+  );
 export default router;
