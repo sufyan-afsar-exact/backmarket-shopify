@@ -17,7 +17,7 @@ exports.BACKMARKET_API_URL = process.env.BACKMARKET_API_URL || '';
 exports.BACKMARKET_HEADERS = {
     Authorization: `Basic ${exports.BACKMARKET_CREDS}`,
     Accept: 'application/json',
-    'Accept-Language': 'fr-fr',
+    'Accept-Language': '',
     'Content-Type': 'application/json',
 };
 //# sourceMappingURL=config.js.map

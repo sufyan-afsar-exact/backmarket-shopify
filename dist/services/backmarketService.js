@@ -72,6 +72,37 @@ class BackMarketService {
             }
         });
     }
+    showOrders() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield axios_1.default.get(`https://preprod.backmarket.fr/ws/orders?country_code=fr-fr`, {
+                    headers: config_1.BACKMARKET_HEADERS,
+                });
+                if (response.status === 200) {
+                    return {
+                        success: true,
+                        data: {
+                            result: response,
+                        },
+                    };
+                }
+                else {
+                    console.warn(`⚠️ API responded with status: ${response.status}`);
+                    return {
+                        success: false,
+                        message: `Failed to fetch product listings. Status code: ${response.status}`,
+                    };
+                }
+            }
+            catch (error) {
+                console.error("❌ Error fetching product listings:", error.message);
+                return {
+                    success: false,
+                    message: "Error fetching product listings. Please try again later.",
+                };
+            }
+        });
+    }
 }
 exports.BackMarketService = BackMarketService;
 //# sourceMappingURL=backmarketService.js.map
