@@ -13,7 +13,7 @@ export const BACKMARKET_API_URL = process.env.BACKMARKET_API_URL ||'';
 export const BACKMARKET_HEADERS = {
     Authorization: `Basic ${BACKMARKET_CREDS}`,
     Accept: 'application/json',
-    'Accept-Language': 'fr-fr',
+    'Accept-Language': '',
     'Content-Type': 'application/json',
   };
 

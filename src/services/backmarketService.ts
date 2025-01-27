@@ -52,4 +52,35 @@ export class BackMarketService {
       throw new Error("Unable to connect to BackMarket API. Check your credentials.");
     }
   }
+  
+  public async showOrders(): Promise<any> {
+    try {
+      const response = await axios.get(`https://preprod.backmarket.fr/ws/orders?country_code=fr-fr`, {
+        headers: BACKMARKET_HEADERS,
+      }); 
+
+      if (response.status === 200) {
+        return {
+          success: true,
+          data: {
+            result: response,
+          },
+        };
+      } else {
+        console.warn(`⚠️ API responded with status: ${response.status}`);
+        return {
+          success: false,
+          message: `Failed to fetch product listings. Status code: ${response.status}`,
+        };
+      }
+    } catch (error: any) {
+      console.error("❌ Error fetching product listings:", error.message);
+      return {
+        success: false,
+        message: "Error fetching product listings. Please try again later.",
+      };
+    }
+  }
+
+
 }

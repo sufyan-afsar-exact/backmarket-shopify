@@ -3,13 +3,17 @@ import { BackmarketController } from "../controllers/backmarketController";
 import { wrapper } from "../helpers/exception_wrapper";
 import { shopifyController } from "../controllers/shopifyController";
 import { OrderController } from "../controllers/orderController";
+import { BackmarketOrdersController } from "../controllers/backmarketOrders";
 const router = Router();
 
 router.get( 
     "/backmarket/product-listing",
     wrapper(BackmarketController.showProductListing)
   );
-
+  router.get( 
+    "/backmarket/sync-orders-to-shopify",
+    wrapper(BackmarketOrdersController.showOrders)
+  );
 
   router.get(
     "/shopify/product-listing",
@@ -36,4 +40,6 @@ router.get(
     "/webhooks/orders/create",
     wrapper(OrderController.handleOrderCreateWebhook)
   );
+
+
 export default router;
